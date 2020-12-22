@@ -1,3 +1,8 @@
+/*
+ * Copyright (C) 2020 by Eddie
+ *
+ */
+ 
 /*******************************************************************************
  * This file is part of PsxNewLib.                                             *
  *                                                                             *
@@ -164,7 +169,6 @@ void loop () {
         usbStick.setYAxis(ANALOG_IDLE_VALUE);
         usbStick.setRxAxis(ANALOG_IDLE_VALUE);
         usbStick.setRyAxis(ANALOG_IDLE_VALUE);
-        //usbStick.setHatSwitch (0, JOYSTICK_HATSWITCH_RELEASE);
         // end of my addition
 
         // All done, send data for real!
@@ -173,105 +177,3 @@ void loop () {
     }
   }
 } 
-
-
-/*
-void loop () {
-  static unsigned long last = 0;
-  
-  if (millis () - last >= POLLING_INTERVAL) {
-    last = millis ();
-    
-    if (!haveController) {
-      if (psx.begin ()) {
-        debugln (F("Controller found!"));
-        if (!psx.enterConfigMode ()) {
-          debugln (F("Cannot enter config mode"));
-        } else {
-          // Try to enable analog sticks
-          if (!psx.enableAnalogSticks ()) {
-            debugln (F("Cannot enable analog sticks"));
-          }
-                  
-          if (!psx.exitConfigMode ()) {
-            debugln (F("Cannot exit config mode"));
-          }
-        }
-        
-        haveController = true;
-      }
-    } else {
-      if (!psx.read ()) {
-        debugln (F("Controller lost :("));
-        haveController = false;
-      } else {
-        byte x, y;
-        
-        
-        //~ digitalWrite (LED_BUILTIN, !!psx.getButtonWord ());
-
-        // Read was successful, so let's make up data for Joystick
-
-        // Buttons first!
-        usbStick.setButton (6, psx.buttonPressed (PSB_SQUARE));
-        usbStick.setButton (9, psx.buttonPressed (PSB_CROSS));
-        usbStick.setButton (10, psx.buttonPressed (PSB_CIRCLE));
-        usbStick.setButton (11, psx.buttonPressed (PSB_TRIANGLE));
-        usbStick.setButton (12, psx.buttonPressed (PSB_L1));
-        usbStick.setButton (13, psx.buttonPressed (PSB_R1));
-        usbStick.setButton (14, psx.buttonPressed (PSB_L2));
-        usbStick.setButton (15, psx.buttonPressed (PSB_R2));
-        usbStick.setButton (16, psx.buttonPressed (PSB_SELECT));
-        usbStick.setButton (17, psx.buttonPressed (PSB_START));
-        usbStick.setButton (18, psx.buttonPressed (PSB_L3));    // Only available on DualShock and later controllers
-        usbStick.setButton (19, psx.buttonPressed (PSB_R3));    // Ditto
-
-        // D-Pad makes up the X/Y axes
-        if (psx.buttonPressed (PSB_PAD_UP)) {
-          usbStick.setYAxis (ANALOG_MIN_VALUE);
-        } else if (psx.buttonPressed (PSB_PAD_DOWN)) {
-          usbStick.setYAxis (ANALOG_MAX_VALUE);
-        } else {
-          usbStick.setYAxis (ANALOG_IDLE_VALUE);
-        }
-        
-        if (psx.buttonPressed (PSB_PAD_LEFT)) {
-          usbStick.setXAxis (ANALOG_MIN_VALUE);
-        } else if (psx.buttonPressed (PSB_PAD_RIGHT)) {
-          usbStick.setXAxis (ANALOG_MAX_VALUE);
-        } else {
-          usbStick.setXAxis (ANALOG_IDLE_VALUE);
-        }
-
-        // Left analog gets mapped to the X/Y rotation axes
-        if (psx.getLeftAnalog (x, y)) {
-          usbStick.setRxAxis (x);
-          usbStick.setRyAxis (y);
-        }
-
-        // Right analog is the hat switch
-        if (psx.getRightAnalog (x, y)) {    // [0 ... 255]
-          // We flip coordinates to avoid having to invert them in atan2()
-          int8_t rx = ANALOG_IDLE_VALUE - x - 1;  // [127 ... -128]
-          rx = deadify (rx, ANALOG_DEAD_ZONE);
-
-          int8_t ry = ANALOG_IDLE_VALUE - y - 1;
-          ry = deadify (ry, ANALOG_DEAD_ZONE);
-
-          if (rx == 0 && ry == 0) {
-            usbStick.setHatSwitch (0, JOYSTICK_HATSWITCH_RELEASE);
-          } else {
-            
-            float angle = atan2 (ry, rx) + 2 * PI - PI / 2;
-            uint16_t intAngle = ((uint16_t) (toDegrees (angle) + 0.5)) % 360;
-            usbStick.setHatSwitch (0, intAngle);
-          }
-        }
-
-        // All done, send data for real!
-        usbStick.sendState ();
-      }
-    }
-  }
-}
-*/
