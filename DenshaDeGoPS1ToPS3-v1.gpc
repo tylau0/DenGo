@@ -1,0 +1,22 @@
+#pragma METAINFO("DenshaDeGoPS1ToPS3", 0, 1, "EddieLau")
+
+#include <remapper.gph>
+
+const uint8 DenshaDeGo[43] = {
+    RMP_USB_A,
+    BUTTON_1,  BUTTON_2,  BUTTON_3,  BUTTON_4,  BUTTON_19,  BUTTON_6,  BUTTON_7, 
+    BUTTON_18,  BUTTON_9,  PADDLE_1,  PADDLE_2,  PADDLE_3,  PADDLE_4, BUTTON_14, 
+    BUTTON_15, BUTTON_16, BUTTON_17, BUTTON_8, BUTTON_5, BUTTON_20, BUTTON_21, 
+    STICK_1_X, STICK_1_Y, STICK_2_X, STICK_2_Y, 
+    POINT_1_X, POINT_1_Y, POINT_2_X, POINT_2_Y, 
+    ACCEL_1_X, ACCEL_1_Y, ACCEL_1_Z, ACCEL_2_X, ACCEL_2_Y, ACCEL_2_Z, 
+    GYRO_1_X,  GYRO_1_Y,  GYRO_1_Z,
+    BUTTON_10,  BUTTON_11,  BUTTON_12,  BUTTON_13
+};
+
+init {
+    remapper(DenshaDeGo);
+}
+
+main {
+}
