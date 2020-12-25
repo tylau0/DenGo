@@ -36,12 +36,13 @@
 /* We must use the bit-banging interface, as SPI pins are only available on the
  * ICSP header on the Leonardo.
  *
- * Note that we use pins 9-12 so that 13 can be used with the built-in LED.
  */
 const byte PIN_PS2_ATT = 11;
 const byte PIN_PS2_CMD = 9;
 const byte PIN_PS2_DAT = 8;
 const byte PIN_PS2_CLK = 10;
+
+const byte PIN_PEDAL = 12;
 
 const unsigned long POLLING_INTERVAL = 1000U / 50U;
 
@@ -169,6 +170,12 @@ void loop () {
         usbStick.setYAxis(ANALOG_IDLE_VALUE);
         usbStick.setRxAxis(ANALOG_IDLE_VALUE);
         usbStick.setRyAxis(ANALOG_IDLE_VALUE);
+
+        // from other devices
+        // pedal - give it a 2nd chance to get pressed if the pedal is pressed (PIN_PEDAL is LOW)
+        if (psx.buttonPressed(PSB_CIRCLE) == 0 and digitalRead(PIN_PEDAL) != 1) {
+          usbStick.setButton(2, 1);
+        }
         // end of my addition
 
         // All done, send data for real!
