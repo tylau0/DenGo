@@ -1,5 +1,6 @@
-#pragma METAINFO("DenshaDeGo PS1 Original", 1, 0, "EddieLau")
-// modified from H https://mega.nz/file/XFl3SSRB#pi-fVi_JWkGES4ms9f6PI79RuMtKu1XP6obtWkCg4Ac
+#pragma METAINFO("DenshaDeGo PS1 Original", 1, 1, "EddieLau")
+
+// inspired by HandsomeChan's script at https://mega.nz/file/XFl3SSRB#pi-fVi_JWkGES4ms9f6PI79RuMtKu1XP6obtWkCg4Ac
 
 #include <remapper.gph>
 
@@ -201,36 +202,42 @@ main {
 
 combo comboP0 {
     set_val(STICK_2_Y, 0); 
+    set_val(STICK_1_X, 0); 
     wait(32767);
     wait(10);
 }
 
 combo comboP1 {
     set_val(STICK_2_Y, 30); 
+    set_val(STICK_1_X, -30); 
     wait(32767);
     wait(10);
 }
 
 combo comboP2 {
     set_val(STICK_2_Y, 50); 
+    set_val(STICK_1_X, -50); 
     wait(32767);
     wait(10);
 }
 
 combo comboP3 {
     set_val(STICK_2_Y, 70); 
+    set_val(STICK_1_X, -70); 
     wait(32767);
     wait(10);
 }
 
 combo comboP4 {
     set_val(STICK_2_Y, 85); 
+    set_val(STICK_1_X, -85); 
     wait(32767);
     wait(10);
 }
 
 combo comboP5 {
     set_val(STICK_2_Y, 100); 
+    set_val(STICK_1_X, -100); 
     wait(32767);
     wait(10);
 }
