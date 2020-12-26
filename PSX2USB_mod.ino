@@ -172,9 +172,9 @@ void loop () {
         usbStick.setRyAxis(ANALOG_IDLE_VALUE);
 
         // from other devices
-        // pedal - give button 2 a 2nd chance to get pressed if the pedal is pressed (PIN_PEDAL is LOW)
-        if (psx.buttonPressed(PSB_CIRCLE) == 0 and digitalRead(PIN_PEDAL) != 1) {
-          usbStick.setButton(2, 1);
+        // pedal - give it a 2nd chance to get pressed if the pedal is pressed (PIN_PEDAL is HIGH)
+        if (psx.buttonPressed(PSB_CIRCLE) == 0) {
+          usbStick.setButton(2, digitalRead(PIN_PEDAL));
         }
         // end of my addition
 
