@@ -5,5 +5,5 @@ Enable the use of original PS1 Densha de Go! controller on various other platfor
 * PS4 Densha de Go!! - See https://tylau0.blogspot.com/2020/12/using-ps1-densha-de-go-controller.html
 
 TODO:
-* Series 103 train control support for PS4 Densha de Go!!
+* Support for Series 103 train in PS4 Densha de Go!! (to be verified)
 * Support on the level train controller
