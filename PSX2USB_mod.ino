@@ -42,7 +42,7 @@ const byte PIN_PS2_CMD = 9;
 const byte PIN_PS2_DAT = 8;
 const byte PIN_PS2_CLK = 10;
 
-const byte PIN_PEDAL = 12;
+const byte PIN_PEDAL = 12;  // optional connection
 
 const unsigned long POLLING_INTERVAL = 1000U / 50U;
 
@@ -148,9 +148,15 @@ void loop () {
         byte x, y;
        
         // Buttons first!
+       // my changes
         usbStick.setButton (0, psx.buttonPressed (PSB_SQUARE));
         usbStick.setButton (1, psx.buttonPressed (PSB_CROSS));
-        usbStick.setButton (2, psx.buttonPressed (PSB_CIRCLE));
+        if (psx.buttonPressed(PSB_CIRCLE) == 1 || digitalRead(PIN_PEDAL) == 1) {
+          usbStick.setButton(2, 1);
+        }
+        else {
+          usbStick.setButton(2, 0);
+        }
         usbStick.setButton (3, psx.buttonPressed (PSB_TRIANGLE));
         usbStick.setButton (4, psx.buttonPressed (PSB_L1));
         usbStick.setButton (5, psx.buttonPressed (PSB_R1));
@@ -160,7 +166,6 @@ void loop () {
         usbStick.setButton (9, psx.buttonPressed (PSB_START));
         usbStick.setButton (10, psx.buttonPressed (PSB_L3));
         usbStick.setButton (11, psx.buttonPressed (PSB_R3));
-        // my additions
         usbStick.setButton (17, psx.buttonPressed (PSB_PAD_UP));
         usbStick.setButton (18, psx.buttonPressed (PSB_PAD_DOWN));
         usbStick.setButton (19, psx.buttonPressed (PSB_PAD_LEFT));
@@ -170,13 +175,7 @@ void loop () {
         usbStick.setYAxis(ANALOG_IDLE_VALUE);
         usbStick.setRxAxis(ANALOG_IDLE_VALUE);
         usbStick.setRyAxis(ANALOG_IDLE_VALUE);
-
-        // from other devices
-        // pedal - give it a 2nd chance to get pressed if the pedal is pressed (PIN_PEDAL is HIGH)
-        if (psx.buttonPressed(PSB_CIRCLE) == 0) {
-          usbStick.setButton(2, digitalRead(PIN_PEDAL));
-        }
-        // end of my addition
+        // end of my changes
 
         // All done, send data for real!
         usbStick.sendState ();
