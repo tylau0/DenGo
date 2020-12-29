@@ -151,12 +151,7 @@ void loop () {
        // my changes
         usbStick.setButton (0, psx.buttonPressed (PSB_SQUARE));
         usbStick.setButton (1, psx.buttonPressed (PSB_CROSS));
-        if (psx.buttonPressed(PSB_CIRCLE) == 1 || digitalRead(PIN_PEDAL) == 1) {
-          usbStick.setButton(2, 1);
-        }
-        else {
-          usbStick.setButton(2, 0);
-        }
+        usbStick.setButton (2, psx.buttonPressed (PSB_CIRCLE));
         usbStick.setButton (3, psx.buttonPressed (PSB_TRIANGLE));
         usbStick.setButton (4, psx.buttonPressed (PSB_L1));
         usbStick.setButton (5, psx.buttonPressed (PSB_R1));
