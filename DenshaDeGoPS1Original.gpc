@@ -1,4 +1,4 @@
-#pragma METAINFO("DenshaDeGo PS1 Original", 1, 2, "EddieLau")
+#pragma METAINFO("DenshaDeGo PS1 Original", 1, 3, "EddieLau")
 
 // inspired by HandsomeChan's script at https://mega.nz/file/XFl3SSRB#pi-fVi_JWkGES4ms9f6PI79RuMtKu1XP6obtWkCg4Ac
 
@@ -17,6 +17,7 @@ const uint8 DenshaDeGo[43] = {
 };
 
 int8 LAST_STICK_1_X = 0;
+int8 LAST_STICK_2_X = 0;
 int8 LAST_STICK_2_Y = 0;
 int8 LAST_BUTTON_8 = 0;
 
@@ -325,6 +326,7 @@ main {
 
 combo comboLast {
    set_val(STICK_1_X, LAST_STICK_1_X);
+   set_val(STICK_2_X, LAST_STICK_2_X);
    set_val(STICK_2_Y, LAST_STICK_2_Y);
    set_val(BUTTON_8, LAST_BUTTON_8);
    wait(32767);
@@ -332,10 +334,12 @@ combo comboLast {
 }
 
 combo comboP1 {
-    LAST_STICK_1_X = -30;
+    LAST_STICK_1_X = 0;
+    LAST_STICK_2_X = -30;
     LAST_STICK_2_Y = 30;
     LAST_BUTTON_8 = 0;
-    set_val(STICK_1_X, -30); 
+    set_val(STICK_1_X, 0);
+    set_val(STICK_2_X, -30); 
     set_val(STICK_2_Y, 30); 
     set_val(BUTTON_8, 0); 
     wait(32767);
@@ -343,10 +347,12 @@ combo comboP1 {
 }
 
 combo comboP2 {
-    LAST_STICK_1_X = -50;
+    LAST_STICK_1_X = 0;
+    LAST_STICK_2_X = -50;
     LAST_STICK_2_Y = 50;
     LAST_BUTTON_8 = 0;
-    set_val(STICK_1_X, -50); 
+    set_val(STICK_1_X, 0);
+    set_val(STICK_2_X, -50); 
     set_val(STICK_2_Y, 50); 
     set_val(BUTTON_8, 0); 
     wait(32767);
@@ -354,10 +360,12 @@ combo comboP2 {
 }
 
 combo comboP3 {
-    LAST_STICK_1_X = -70;
+    LAST_STICK_1_X = 0;
+    LAST_STICK_2_X = -70;
     LAST_STICK_2_Y = 70;
     LAST_BUTTON_8 = 0;
-    set_val(STICK_1_X, -70);
+    set_val(STICK_1_X, 0);
+    set_val(STICK_2_X, -70);
     set_val(STICK_2_Y, 70);  
     set_val(BUTTON_8, 0); 
     wait(32767);
@@ -365,10 +373,12 @@ combo comboP3 {
 }
 
 combo comboP4 {
-    LAST_STICK_1_X = -90;
+    LAST_STICK_1_X = 0;
+    LAST_STICK_2_X = -90;
     LAST_STICK_2_Y = 90;
     LAST_BUTTON_8 = 0;
-    set_val(STICK_1_X, -90); 
+    set_val(STICK_1_X, 0);
+    set_val(STICK_2_X, -90); 
     set_val(STICK_2_Y, 90); 
     set_val(BUTTON_8, 0); 
     wait(32767);
@@ -376,10 +386,12 @@ combo comboP4 {
 }
 
 combo comboP5 {
-    LAST_STICK_1_X = -100;
+    LAST_STICK_1_X = 0;
+    LAST_STICK_2_X = -100;
     LAST_STICK_2_Y = 100;
     LAST_BUTTON_8 = 0;
-    set_val(STICK_1_X, -100); 
+    set_val(STICK_1_X, 0);
+    set_val(STICK_2_X, -100); 
     set_val(STICK_2_Y, 100); 
     set_val(BUTTON_8, 0); 
     wait(32767);
@@ -388,9 +400,11 @@ combo comboP5 {
 
 combo comboB0 {
     LAST_STICK_1_X = 0;
+    LAST_STICK_2_X = 0;
     LAST_STICK_2_Y = 0;
     LAST_BUTTON_8 = 0;
     set_val(STICK_1_X, 0);
+    set_val(STICK_2_X, 0);
     set_val(STICK_2_Y, 0);
     set_val(BUTTON_8, 0); 
     wait(32767);
@@ -399,9 +413,11 @@ combo comboB0 {
 
 combo comboB1 {
     LAST_STICK_1_X = 30;
+    LAST_STICK_2_X = 0;
     LAST_STICK_2_Y = -30;
     LAST_BUTTON_8 = 0;
     set_val(STICK_1_X, 30);
+    set_val(STICK_2_X, 0);
     set_val(STICK_2_Y, -30);
     set_val(BUTTON_8, 0); 
     wait(32767);
@@ -410,9 +426,11 @@ combo comboB1 {
 
 combo comboB2 {
     LAST_STICK_1_X = 40;
+    LAST_STICK_2_X = 0;
     LAST_STICK_2_Y = -40;
     LAST_BUTTON_8 = 0;
     set_val(STICK_1_X, 40);
+    set_val(STICK_2_X, 0);
     set_val(STICK_2_Y, -40);
     set_val(BUTTON_8, 0); 
     wait(32767);
@@ -421,9 +439,11 @@ combo comboB2 {
 
 combo comboB3 {
     LAST_STICK_1_X = 50;
+    LAST_STICK_2_X = 0;
     LAST_STICK_2_Y = -50;
     LAST_BUTTON_8 = 0;
     set_val(STICK_1_X, 50);
+    set_val(STICK_2_X, 0);
     set_val(STICK_2_Y, -50);
     set_val(BUTTON_8, 0); 
     wait(32767);
@@ -432,9 +452,11 @@ combo comboB3 {
 
 combo comboB4 {
     LAST_STICK_1_X = 60;
+    LAST_STICK_2_X = 0;
     LAST_STICK_2_Y = -60;
     LAST_BUTTON_8 = 0;
     set_val(STICK_1_X, 60);
+    set_val(STICK_2_X, 0);
     set_val(STICK_2_Y, -60);
     set_val(BUTTON_8, 0); 
     wait(32767);
@@ -443,9 +465,11 @@ combo comboB4 {
 
 combo comboB5 {
     LAST_STICK_1_X = 70;
+    LAST_STICK_2_X = 0;
     LAST_STICK_2_Y = -70;
     LAST_BUTTON_8 = 0;
     set_val(STICK_1_X, 70);
+    set_val(STICK_2_X, 0);
     set_val(STICK_2_Y, -70);
     set_val(BUTTON_8, 0); 
     wait(32767);
@@ -454,9 +478,11 @@ combo comboB5 {
 
 combo comboB6 {
     LAST_STICK_1_X = 80;
+    LAST_STICK_2_X = 0;
     LAST_STICK_2_Y = -80;
     LAST_BUTTON_8 = 0;
     set_val(STICK_1_X, 80);
+    set_val(STICK_2_X, 0);
     set_val(STICK_2_Y, -80);
     set_val(BUTTON_8, 0); 
     wait(32767);
@@ -465,9 +491,11 @@ combo comboB6 {
 
 combo comboB7 {
     LAST_STICK_1_X = 90;
+    LAST_STICK_2_X = 0;
     LAST_STICK_2_Y = -90;
     LAST_BUTTON_8 = 0;
     set_val(STICK_1_X, 90);
+    set_val(STICK_2_X, 0);
     set_val(STICK_2_Y, -90);
     set_val(BUTTON_8, 0); 
     wait(32767);
@@ -476,9 +504,11 @@ combo comboB7 {
 
 combo comboB8 {
     LAST_STICK_1_X = 100;
+    LAST_STICK_2_X = 0;
     LAST_STICK_2_Y = -100;
     LAST_BUTTON_8 = 0;
     set_val(STICK_1_X, 100);
+    set_val(STICK_2_X, 0);
     set_val(STICK_2_Y, -100);
     set_val(BUTTON_8, 0); 
     wait(32767);
@@ -487,9 +517,11 @@ combo comboB8 {
 
 combo comboEB {
     LAST_STICK_1_X = 100;
+    LAST_STICK_2_X = 0;
     LAST_STICK_2_Y = -100;
     LAST_BUTTON_8 = 100;
     set_val(STICK_1_X, 100);
+    set_val(STICK_2_X, 0);
     set_val(STICK_2_Y, -100);
     set_val(BUTTON_8, 100);    
     wait(32767);
