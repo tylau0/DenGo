@@ -1,7 +1,8 @@
 /*
  * Copyright (C) 2020 by Eddie'
  * This one adds support of additional pedal cabled to pin 12.
- * Connect the pin to GND if no pedal is used.
+ * Have pin 12 being 5V if the pedal is not pressed, 0V otherwise.
+ * Connect the pin to 5V if no pedal is used.
  *
  */
  
@@ -152,7 +153,7 @@ void loop () {
         // Buttons first!
         usbStick.setButton (0, psx.buttonPressed (PSB_SQUARE));
         usbStick.setButton (1, psx.buttonPressed (PSB_CROSS));
-        if (psx.buttonPressed(PSB_CIRCLE) == 1 || digitalRead(PIN_PEDAL) == 1) {
+        if (psx.buttonPressed(PSB_CIRCLE) == 1 || digitalRead(PIN_PEDAL) == 0) {
           usbStick.setButton(2, 1);
         }
         else {
