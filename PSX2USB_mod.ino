@@ -42,8 +42,6 @@ const byte PIN_PS2_CMD = 9;
 const byte PIN_PS2_DAT = 8;
 const byte PIN_PS2_CLK = 10;
 
-const byte PIN_PEDAL = 12;  // optional connection
-
 const unsigned long POLLING_INTERVAL = 1000U / 50U;
 
 // Send debug messages to serial port
