@@ -1,4 +1,4 @@
-#pragma METAINFO("DenshaDeGo PS1 MayFlash", 1, 0, "EddieLau")
+#pragma METAINFO("DenshaDeGoPS1ToPS4 MayFlash", 1, 1, "EddieLau")
 
 // For use with SS/N64/PS2 Controller Adapter for PC USB
 // http://www.mayflash.com/Products/PCUSB/PC048.html
@@ -326,7 +326,7 @@ main {
         combo_stop(comboB8);
         combo_stop(comboEB);
 	}
-    else if (get_val(PADDLE_1) > 99.5 && get_val(PADDLE_2) > 99.5 && get_val(ACCEL_2_Z) < 0.5 && get_val(ACCEL_2_X) < 0.5 && get_val(BUTTON_5) > 99.5 && get_val(ACCEL_2_Y) > 99.5 && get_val(BUTTON_8) > 99.5) { // Acceleration intermediate
+    else if (get_val(PADDLE_1) < 0.5 && get_val(PADDLE_2) > 99.5 && get_val(ACCEL_2_Z) < 0.5 && get_val(ACCEL_2_X) < 0.5 && get_val(BUTTON_5) > 99.5 && get_val(ACCEL_2_Y) > 99.5 && get_val(BUTTON_8) > 99.5) { // Acceleration intermediate
         combo_run(comboLast);
         combo_stop(comboP1);
         combo_stop(comboP2);
@@ -549,5 +549,3 @@ combo comboEB {
     wait(32767);
     wait(10);
 }
-
-
