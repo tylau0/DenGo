@@ -1,0 +1,580 @@
+#pragma METAINFO("DenshaDeGoPS1ToPS3 MayFlash", 1, 0, "EddieLau")
+
+#include <remapper.gph>
+
+const uint8 PS1[43] = {
+    RMP_USB_A,
+    BUTTON_1,  BUTTON_3,  BUTTON_2,  BUTTON_7,  BUTTON_4,  BUTTON_6,  BUTTON_8, 
+    BUTTON_5,  BUTTON_9,  BUTTON_10,  BUTTON_11,  BUTTON_12,  BUTTON_13, BUTTON_17, 
+    BUTTON_16, BUTTON_15, BUTTON_14, BUTTON_18, BUTTON_19, BUTTON_20, BUTTON_21, 
+    STICK_1_X, STICK_1_Y, STICK_2_X, STICK_2_Y, 
+    POINT_1_X, POINT_1_Y, POINT_2_X, POINT_2_Y, 
+    ACCEL_1_X, ACCEL_1_Y, ACCEL_1_Z, ACCEL_2_X, ACCEL_2_Y, ACCEL_2_Z, 
+    GYRO_1_X,  GYRO_1_Y,  GYRO_1_Z,
+    PADDLE_1,  PADDLE_2,  PADDLE_3,  PADDLE_4
+};
+
+int8 last_state = 0;
+int8 last_button_10 = 0;
+int8 last_button_11 = 0;
+int8 last_button_12 = 0;
+int8 last_button_13 = 0;
+fix32 last_button_14 = 0.0;
+
+init {
+    remapper(PS1);
+}
+
+main {
+    // STICK_2_X -> S2X, STICK_2_Y -> S2Y, BUTTON_14 -> TRIANGLE
+    // L1 -> BUTTON_7, R1 -> BUTTON_4, L2 -> BUTTON_8, R2 -> BUTTON_5
+    
+    // Brake
+    if (get_val(BUTTON_7) > 99.5 && get_val(BUTTON_4) > 99.5 && get_val(BUTTON_8) > 99.5 && get_val(BUTTON_5) > 99.5) { // brake intermediate
+        combo_run(comboLast);
+        combo_stop(comboP1);
+        combo_stop(comboP2);
+        combo_stop(comboP3);
+        combo_stop(comboP4);
+        combo_stop(comboP5); 
+        combo_stop(comboB0);
+        combo_stop(comboB1);
+        combo_stop(comboB2);
+        combo_stop(comboB3);
+        combo_stop(comboB4);
+        combo_stop(comboB5);
+        combo_stop(comboB6);
+        combo_stop(comboB7);
+        combo_stop(comboB8);
+        combo_stop(comboEB);
+    }
+    else if (get_val(BUTTON_7) > 99.5 && get_val(BUTTON_4) > 99.5 && get_val(BUTTON_8) < 0.5 && get_val(BUTTON_5) < 0.5 ||
+             get_val(BUTTON_7) < 0.5 && get_val(BUTTON_4) > 99.5 && get_val(BUTTON_8) < 0.5 && get_val(BUTTON_5) < 0.5 ||
+             get_val(BUTTON_7) > 99.5 && get_val(BUTTON_4) < 0.5 && get_val(BUTTON_8) > 99.5 && get_val(BUTTON_5) < 0.5 ||
+             get_val(BUTTON_7) < 0.5 && get_val(BUTTON_4) < 0.5 && get_val(BUTTON_8) > 99.5 && get_val(BUTTON_5) < 0.5 ||
+             get_val(BUTTON_7) < 0.5 && get_val(BUTTON_4) < 0.5 && get_val(BUTTON_8) < 0.5 && get_val(BUTTON_5) < 0.5) {  // EB
+        combo_stop(comboLast);
+        combo_stop(comboP1);
+        combo_stop(comboP2);
+        combo_stop(comboP3);
+        combo_stop(comboP4);
+        combo_stop(comboP5); 
+        combo_stop(comboB0);
+        combo_stop(comboB1);
+        combo_stop(comboB2);
+        combo_stop(comboB3);
+        combo_stop(comboB4);
+        combo_stop(comboB5);
+        combo_stop(comboB6);
+        combo_stop(comboB7);
+        combo_stop(comboB8);
+        combo_run(comboEB);
+    }
+    else if (get_val(BUTTON_7) < 0.5 && get_val(BUTTON_4) > 99.5 && get_val(BUTTON_8) > 99.5 && get_val(BUTTON_5) < 0.5) { // B8
+        combo_stop(comboLast);
+        combo_stop(comboP1);
+        combo_stop(comboP2);
+        combo_stop(comboP3);
+        combo_stop(comboP4);
+        combo_stop(comboP5);
+        combo_stop(comboB0);
+        combo_stop(comboB1);
+        combo_stop(comboB2);
+        combo_stop(comboB3);
+        combo_stop(comboB4);
+        combo_stop(comboB5);
+        combo_stop(comboB6);
+        combo_stop(comboB7);
+        combo_run(comboB8);
+        combo_stop(comboEB);
+    }
+    else if (get_val(BUTTON_7) > 99.5 && get_val(BUTTON_4) > 99.5 && get_val(BUTTON_8) > 99.5 && get_val(BUTTON_5) < 0.5) { // B7
+        combo_stop(comboLast);
+        combo_stop(comboP1);
+        combo_stop(comboP2);
+        combo_stop(comboP3);
+        combo_stop(comboP4);
+        combo_stop(comboP5);
+        combo_stop(comboB0);
+        combo_stop(comboB1);
+        combo_stop(comboB2);
+        combo_stop(comboB3);
+        combo_stop(comboB4);
+        combo_stop(comboB5);
+        combo_stop(comboB6);
+        combo_run(comboB7);
+        combo_stop(comboB8);
+        combo_stop(comboEB);
+    }
+    else if (get_val(BUTTON_7) < 0.5 && get_val(BUTTON_4) < 0.5 && get_val(BUTTON_8) < 0.5 && get_val(BUTTON_5) > 99.5) { // B6
+        combo_stop(comboLast);
+        combo_stop(comboP1);
+        combo_stop(comboP2);
+        combo_stop(comboP3);
+        combo_stop(comboP4);
+        combo_stop(comboP5);
+        combo_stop(comboB0);
+        combo_stop(comboB1);
+        combo_stop(comboB2);
+        combo_stop(comboB3);
+        combo_stop(comboB4);
+        combo_stop(comboB5);
+        combo_run(comboB6);
+        combo_stop(comboB7);
+        combo_stop(comboB8);
+        combo_stop(comboEB);
+    }
+    else if (get_val(BUTTON_7) > 99.5 && get_val(BUTTON_4) < 0.5 && get_val(BUTTON_8) < 0.5 && get_val(BUTTON_5) > 99.5) { // B5
+        combo_stop(comboLast);
+        combo_stop(comboP1);
+        combo_stop(comboP2);
+        combo_stop(comboP3);
+        combo_stop(comboP4);
+        combo_stop(comboP5);
+        combo_stop(comboB0);
+        combo_stop(comboB1);
+        combo_stop(comboB2);
+        combo_stop(comboB3);
+        combo_stop(comboB4);
+        combo_run(comboB5);
+        combo_stop(comboB6);
+        combo_stop(comboB7);
+        combo_stop(comboB8);
+        combo_stop(comboEB);
+    }
+    else if (get_val(BUTTON_7) < 0.5 && get_val(BUTTON_4) < 0.5 && get_val(BUTTON_8) > 99.5 && get_val(BUTTON_5) > 99.5) { // B4
+        combo_stop(comboLast);
+        combo_stop(comboP1);
+        combo_stop(comboP2);
+        combo_stop(comboP3);
+        combo_stop(comboP4);
+        combo_stop(comboP5);
+        combo_stop(comboB0);
+        combo_stop(comboB1);
+        combo_stop(comboB2);
+        combo_stop(comboB3);
+        combo_run(comboB4);
+        combo_stop(comboB5);
+        combo_stop(comboB6);
+        combo_stop(comboB7);
+        combo_stop(comboB8);
+        combo_stop(comboEB);
+    }
+    else if (get_val(BUTTON_7) > 99.5 && get_val(BUTTON_4) < 0.5 && get_val(BUTTON_8) > 99.5 && get_val(BUTTON_5) > 99.5) { // B3
+        combo_stop(comboLast);
+        combo_stop(comboP1);
+        combo_stop(comboP2);
+        combo_stop(comboP3);
+        combo_stop(comboP4);
+        combo_stop(comboP5);
+        combo_stop(comboB0);
+        combo_stop(comboB1);
+        combo_stop(comboB2);
+        combo_run(comboB3);
+        combo_stop(comboB4);
+        combo_stop(comboB5);
+        combo_stop(comboB6);
+        combo_stop(comboB7);
+        combo_stop(comboB8);
+        combo_stop(comboEB);
+    }
+    else if (get_val(BUTTON_7) < 0.5 && get_val(BUTTON_4) > 99.5 && get_val(BUTTON_8) < 0.5 && get_val(BUTTON_5) > 99.5) { // B2
+        combo_stop(comboLast);
+        combo_stop(comboP1);
+        combo_stop(comboP2);
+        combo_stop(comboP3);
+        combo_stop(comboP4);
+        combo_stop(comboP5);
+        combo_stop(comboB0);
+        combo_stop(comboB1);
+        combo_run(comboB2);
+        combo_stop(comboB3);
+        combo_stop(comboB4);
+        combo_stop(comboB5);
+        combo_stop(comboB6);
+        combo_stop(comboB7);
+        combo_stop(comboB8);
+        combo_stop(comboEB);
+    }
+    else if (get_val(BUTTON_7) > 99.5 && get_val(BUTTON_4) > 99.5 && get_val(BUTTON_8) < 0.5 && get_val(BUTTON_5) > 99.5) { // B1
+        combo_stop(comboLast);
+        combo_stop(comboP1);
+        combo_stop(comboP2);
+        combo_stop(comboP3);
+        combo_stop(comboP4);
+        combo_stop(comboP5);
+        combo_stop(comboB0);
+        combo_run(comboB1);
+        combo_stop(comboB2);
+        combo_stop(comboB3);
+        combo_stop(comboB4);
+        combo_stop(comboB5);
+        combo_stop(comboB6);
+        combo_stop(comboB7);
+        combo_stop(comboB8);
+        combo_stop(comboEB);
+    }
+    else if (get_val(STICK_2_X) < -99.5 && get_val(STICK_2_Y) > 99.5 && get_val(BUTTON_14) < 0.5 && get_val(BUTTON_7) < 0.5 && get_val(BUTTON_4) > 99.5 && get_val(BUTTON_8) > 99.5 && get_val(BUTTON_5) > 99.5) { // B0 or P4
+        if (last_state == 3 || last_state == 4 || last_state == 5)  { // Previous it was P3/P5/P4.
+            combo_stop(comboLast);
+            combo_stop(comboP1);
+            combo_stop(comboP2);
+            combo_stop(comboP3);
+            combo_run(comboP4);
+            combo_stop(comboP5);
+            combo_stop(comboB0);
+            combo_stop(comboB1);
+            combo_stop(comboB2);
+            combo_stop(comboB3);
+            combo_stop(comboB4);
+            combo_stop(comboB5);
+            combo_stop(comboB6);
+            combo_stop(comboB7);
+            combo_stop(comboB8);
+            combo_stop(comboEB);
+        }
+        else {  // B0
+            combo_stop(comboLast);
+            combo_stop(comboP1);
+            combo_stop(comboP2);
+            combo_stop(comboP3);
+            combo_stop(comboP4);
+            combo_stop(comboP5);
+            combo_run(comboB0);
+            combo_stop(comboB1);
+            combo_stop(comboB2);
+            combo_stop(comboB3);
+            combo_stop(comboB4);
+            combo_stop(comboB5);
+            combo_stop(comboB6);
+            combo_stop(comboB7);
+            combo_stop(comboB8);
+            combo_stop(comboEB);
+        }
+    }
+    else if (get_val(STICK_2_X) > 99.5 && get_val(STICK_2_Y) > 99.5 && get_val(BUTTON_14) > 99.5 && get_val(BUTTON_7) < 0.5 && get_val(BUTTON_4) > 99.5 && get_val(BUTTON_8) > 99.5 && get_val(BUTTON_5) > 99.5) { // P1
+        combo_stop(comboLast);
+        combo_run(comboP1);
+        combo_stop(comboP2);
+        combo_stop(comboP3);
+        combo_stop(comboP4);
+        combo_stop(comboP5); 
+        combo_stop(comboB0);
+        combo_stop(comboB1);
+        combo_stop(comboB2);
+        combo_stop(comboB3);
+        combo_stop(comboB4);
+        combo_stop(comboB5);
+        combo_stop(comboB6);
+        combo_stop(comboB7);
+        combo_stop(comboB8);
+        combo_stop(comboEB);
+    }
+    else if (get_val(STICK_2_X) > 99.5 && get_val(STICK_2_Y) > 99.5 && get_val(BUTTON_14) < 0.5 && get_val(BUTTON_7) < 0.5 && get_val(BUTTON_4) > 99.5 && get_val(BUTTON_8) > 99.5 && get_val(BUTTON_5) > 99.5) { // P2
+        combo_stop(comboLast);
+        combo_stop(comboP1);
+        combo_run(comboP2);
+        combo_stop(comboP3);
+        combo_stop(comboP4);
+        combo_stop(comboP5); 
+        combo_stop(comboB0);
+        combo_stop(comboB1);
+        combo_stop(comboB2);
+        combo_stop(comboB3);
+        combo_stop(comboB4);
+        combo_stop(comboB5);
+        combo_stop(comboB6);
+        combo_stop(comboB7);
+        combo_stop(comboB8);
+        combo_stop(comboEB);
+    } 
+    else if (get_val(STICK_2_X) < -99.5 && get_val(STICK_2_Y) > 99.5 && get_val(BUTTON_14) > 99.5 && get_val(BUTTON_7) < 0.5 && get_val(BUTTON_4) > 99.5 && get_val(BUTTON_8) > 99.5 && get_val(BUTTON_5) > 99.5) { // P3
+        combo_stop(comboLast);
+        combo_stop(comboP1);
+        combo_stop(comboP2);
+        combo_run(comboP3);
+        combo_stop(comboP4);
+        combo_stop(comboP5); 
+        combo_stop(comboB0);
+        combo_stop(comboB1);
+        combo_stop(comboB2);
+        combo_stop(comboB3);
+        combo_stop(comboB4);
+        combo_stop(comboB5);
+        combo_stop(comboB6);
+        combo_stop(comboB7);
+        combo_stop(comboB8);
+        combo_stop(comboEB);
+    } 
+    else if (get_val(STICK_2_X) < 0.5 && get_val(STICK_2_X) > -0.5 && get_val(STICK_2_Y) > 99.5 && get_val(BUTTON_14) > 99.5 && get_val(BUTTON_7) < 0.5 && get_val(BUTTON_4) > 99.5 && get_val(BUTTON_8) > 99.5 && get_val(BUTTON_5) > 99.5) { // P5
+        combo_stop(comboLast);
+        combo_stop(comboP1);
+        combo_stop(comboP2);
+        combo_stop(comboP3);
+        combo_stop(comboP4);
+        combo_run(comboP5); 
+        combo_stop(comboB0);
+        combo_stop(comboB1);
+        combo_stop(comboB2);
+        combo_stop(comboB3);
+        combo_stop(comboB4);
+        combo_stop(comboB5);
+        combo_stop(comboB6);
+        combo_stop(comboB7);
+        combo_stop(comboB8);
+        combo_stop(comboEB);
+	}
+    else if (get_val(STICK_2_X) < 0.5 && get_val(STICK_2_Y) > 99.5 && get_val(BUTTON_14) < 0.5 && get_val(BUTTON_7) < 0.5 && get_val(BUTTON_4) > 99.5 && get_val(BUTTON_8) > 99.5 && get_val(BUTTON_5) > 99.5) { // Acceleration intermediate
+        combo_run(comboLast);
+        combo_stop(comboP1);
+        combo_stop(comboP2);
+        combo_stop(comboP3);
+        combo_stop(comboP4);
+        combo_stop(comboP5); 
+        combo_stop(comboB0);
+        combo_stop(comboB1);
+        combo_stop(comboB2);
+        combo_stop(comboB3);
+        combo_stop(comboB4);
+        combo_stop(comboB5);
+        combo_stop(comboB6);
+        combo_stop(comboB7);
+        combo_stop(comboB8);
+        combo_stop(comboEB);
+    }
+}
+
+combo comboLast {
+   set_val(BUTTON_10, last_button_10);
+   set_val(BUTTON_11, last_button_11);
+   set_val(BUTTON_12, last_button_12);
+   set_val(BUTTON_13, last_button_13);
+   set_val(BUTTON_14, last_button_14);
+   wait(32767);
+   wait(10);
+}
+
+combo comboP1 {
+    last_state = 1;
+    set_val(BUTTON_10, 100);
+    set_val(BUTTON_11, 100);
+    set_val(BUTTON_12, 0);
+    set_val(BUTTON_13, 100); 
+    last_button_10 = 100;
+    last_button_11 = 100;
+    last_button_12 = 0;
+    last_button_13 = 100;
+    last_button_14 = get_val(BUTTON_14);
+    wait(32767);
+    wait(10);
+}
+
+combo comboP2 {
+    last_state = 2;
+    set_val(BUTTON_10, 100);
+    set_val(BUTTON_11, 100);
+    set_val(BUTTON_12, 0);
+    set_val(BUTTON_13, 100); 
+    last_button_10 = 100;
+    last_button_11 = 100;
+    last_button_12 = 0;
+    last_button_13 = 100;
+    last_button_14 = get_val(BUTTON_14);
+    wait(32767);
+    wait(10);
+}
+
+combo comboP3 {
+    last_state = 3;
+    set_val(BUTTON_10, 100);
+    set_val(BUTTON_11, 100);
+    set_val(BUTTON_12, 100);
+    set_val(BUTTON_13, 0); 
+    last_button_10 = 100;
+    last_button_11 = 100;
+    last_button_12 = 100;
+    last_button_13 = 0;
+    last_button_14 = get_val(BUTTON_14);
+    wait(32767);
+    wait(10);
+}
+
+combo comboP4 {
+    last_state = 4;
+    set_val(BUTTON_10, 100);
+    set_val(BUTTON_11, 100);
+    set_val(BUTTON_12, 100);
+    set_val(BUTTON_13, 0);
+    last_button_10 = 100;
+    last_button_11 = 100;
+    last_button_12 = 100;
+    last_button_13 = 0;
+    last_button_14 = get_val(BUTTON_14);    
+    wait(32767);
+    wait(10);
+}
+
+combo comboP5 {
+    last_state = 5;
+    set_val(BUTTON_10, 100);
+    set_val(BUTTON_11, 100);
+    set_val(BUTTON_12, 0);
+    set_val(BUTTON_13, 0); 
+    last_button_10 = 100;
+    last_button_11 = 100;
+    last_button_12 = 0;
+    last_button_13 = 0;
+    last_button_14 = get_val(BUTTON_14);
+    wait(32767);
+    wait(10);
+}
+
+combo comboB0 {
+    last_state = 0;
+    set_val(BUTTON_10, 100);
+    set_val(BUTTON_11, 100);
+    set_val(BUTTON_12, 100);
+    set_val(BUTTON_13, 100); 
+    last_button_10 = 100;
+    last_button_11 = 100;
+    last_button_12 = 100;
+    last_button_13 = 100;
+    last_button_14 = get_val(BUTTON_14);
+    wait(32767);
+    wait(10);
+}
+
+combo comboB1 {
+    last_state = -1;
+    set_val(BUTTON_10, 100);
+    set_val(BUTTON_11, 100);
+    set_val(BUTTON_12, 100);
+    set_val(BUTTON_13, 100); 
+    last_button_10 = 100;
+    last_button_11 = 100;
+    last_button_12 = 100;
+    last_button_13 = 100;
+    last_button_14 = get_val(BUTTON_14);
+    wait(32767);
+    wait(10);
+}
+
+combo comboB2 {
+    last_state = -2;
+    set_val(BUTTON_10, 100);
+    set_val(BUTTON_11, 100);
+    set_val(BUTTON_12, 100);
+    set_val(BUTTON_13, 100); 
+    last_button_10 = 100;
+    last_button_11 = 100;
+    last_button_12 = 100;
+    last_button_13 = 100;
+    last_button_14 = get_val(BUTTON_14);
+    wait(32767);
+    wait(10);
+}
+
+combo comboB3 {
+    last_state = -3;
+    set_val(BUTTON_10, 100);
+    set_val(BUTTON_11, 100);
+    set_val(BUTTON_12, 100);
+    set_val(BUTTON_13, 100); 
+    last_button_10 = 100;
+    last_button_11 = 100;
+    last_button_12 = 100;
+    last_button_13 = 100;
+    last_button_14 = get_val(BUTTON_14);
+    wait(32767);
+    wait(10);
+}
+
+combo comboB4 {
+    last_state = -4;
+    set_val(BUTTON_10, 100);
+    set_val(BUTTON_11, 100);
+    set_val(BUTTON_12, 100);
+    set_val(BUTTON_13, 100); 
+    last_button_10 = 100;
+    last_button_11 = 100;
+    last_button_12 = 100;
+    last_button_13 = 100;
+    last_button_14 = get_val(BUTTON_14);
+    wait(32767);
+    wait(10);
+}
+
+combo comboB5 {
+    last_state = -5;
+    set_val(BUTTON_10, 100);
+    set_val(BUTTON_11, 100);
+    set_val(BUTTON_12, 100);
+    set_val(BUTTON_13, 100); 
+    last_button_10 = 100;
+    last_button_11 = 100;
+    last_button_12 = 100;
+    last_button_13 = 100;
+    last_button_14 = get_val(BUTTON_14);
+    wait(32767);
+    wait(10);
+}
+
+combo comboB6 {
+    last_state = -6;
+    set_val(BUTTON_10, 100);
+    set_val(BUTTON_11, 100);
+    set_val(BUTTON_12, 100);
+    set_val(BUTTON_13, 100); 
+    last_button_10 = 100;
+    last_button_11 = 100;
+    last_button_12 = 100;
+    last_button_13 = 100;
+    last_button_14 = get_val(BUTTON_14);
+    wait(32767);
+    wait(10);
+}
+
+combo comboB7 {
+    last_state = -7;
+    set_val(BUTTON_10, 100);
+    set_val(BUTTON_11, 100);
+    set_val(BUTTON_12, 100);
+    set_val(BUTTON_13, 100); 
+    last_button_10 = 100;
+    last_button_11 = 100;
+    last_button_12 = 100;
+    last_button_13 = 100;
+    last_button_14 = get_val(BUTTON_14);
+    wait(32767);
+    wait(10);
+}
+
+combo comboB8 {
+    last_state = -8;
+    set_val(BUTTON_10, 100);
+    set_val(BUTTON_11, 100);
+    set_val(BUTTON_12, 100);
+    set_val(BUTTON_13, 100); 
+    last_button_10 = 100;
+    last_button_11 = 100;
+    last_button_12 = 100;
+    last_button_13 = 100;
+    last_button_14 = get_val(BUTTON_14);
+    wait(32767);
+    wait(10);
+}
+
+combo comboEB {
+    last_state = -9;
+    set_val(BUTTON_10, 100);
+    set_val(BUTTON_11, 100);
+    set_val(BUTTON_12, 100);
+    set_val(BUTTON_13, 100); 
+    last_button_10 = 100;
+    last_button_11 = 100;
+    last_button_12 = 100;
+    last_button_13 = 100;
+    last_button_14 = get_val(BUTTON_14);
+    wait(32767);
+    wait(10);
+}
