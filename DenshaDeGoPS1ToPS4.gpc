@@ -1,21 +1,19 @@
-#pragma METAINFO("DenshaDeGoPS1ToPS4 MayFlash", 1, 1, "EddieLau")
+#pragma METAINFO("DenshaDeGo PS1 To PS4", 1, 5, "EddieLau")
 
-// For use with SS/N64/PS2 Controller Adapter for PC USB
-// http://www.mayflash.com/Products/PCUSB/PC048.html
 // inspired by HandsomeChan's script at https://mega.nz/file/XFl3SSRB#pi-fVi_JWkGES4ms9f6PI79RuMtKu1XP6obtWkCg4Ac
 
 #include <remapper.gph>
 
 const uint8 DenshaDeGo[43] = {
     RMP_USB_A,
-    BUTTON_1,  BUTTON_3,  BUTTON_14,  ACCEL_2_X,  BUTTON_5,  BUTTON_6,  ACCEL_2_Y, 
-    BUTTON_8,  BUTTON_9,  BUTTON_10, BUTTON_11, BUTTON_12, BUTTON_13, BUTTON_17, 
-    BUTTON_16, BUTTON_15, ACCEL_2_Z, BUTTON_18, BUTTON_19, BUTTON_20, BUTTON_21, 
-    STICK_1_X, STICK_1_Y, PADDLE_1,  PADDLE_2, 
+    BUTTON_1,  BUTTON_14,  BUTTON_3,  BUTTON_4,  ACCEL_2_X,  BUTTON_6,  ACCEL_2_Z, 
+    ACCEL_2_Y,  BUTTON_9,  BUTTON_10, BUTTON_11, BUTTON_12, BUTTON_13, BUTTON_20, 
+    BUTTON_15, BUTTON_16, BUTTON_17, BUTTON_21, BUTTON_5, BUTTON_2, BUTTON_18, 
+    STICK_1_X, STICK_1_Y, STICK_2_X, STICK_2_Y, 
     POINT_1_X, POINT_1_Y, POINT_2_X, POINT_2_Y, 
-    ACCEL_1_X, ACCEL_1_Y, ACCEL_1_Z, BUTTON_4, BUTTON_7, BUTTON_2, 
+    ACCEL_1_X, ACCEL_1_Y, ACCEL_1_Z, BUTTON_19, BUTTON_8, BUTTON_7, 
     GYRO_1_X,  GYRO_1_Y,  GYRO_1_Z,
-    STICK_2_X, STICK_2_Y,  PADDLE_3,  PADDLE_4
+    PADDLE_1,  PADDLE_2,  PADDLE_3,  PADDLE_4
 };
 
 int8 LAST_STICK_1_X = 0;
@@ -28,11 +26,11 @@ init {
 }
 
 main {
-    // PADDLE_1 -> S2X, PADDLE_2 -> S2Y, ACCEL_2_Z -> Triangle
-    // L1 -> ACCEL_2_X, R1 -> BUTTON_5, L2 -> ACCEL_2_Y, R2 -> BUTTON_8
+    // PADDLE_1 -> UP, PADDLE_2 -> DOWN, PADDLE_3 -> LEFT, PADDLE_4 -> RIGHT
+    // L1 -> ACCEL_2_Z, R1 -> BUTTON_4, L2 -> BUTTON_21, R2 -> BUTTON_5
     
     // Brake
-    if (get_val(ACCEL_2_X) > 99.5 && get_val(BUTTON_5) > 99.5 && get_val(ACCEL_2_Y) > 99.5 && get_val(BUTTON_8) > 99.5) { // brake intermediate
+    if (get_val(ACCEL_2_Z) > 99.5 && get_val(BUTTON_4) > 99.5 && get_val(BUTTON_21) > 99.5 && get_val(BUTTON_5) > 99.5) { // brake intermediate
         combo_run(comboLast);
         combo_stop(comboP1);
         combo_stop(comboP2);
@@ -50,11 +48,11 @@ main {
         combo_stop(comboB8);
         combo_stop(comboEB);
     }
-    else if (get_val(ACCEL_2_X) > 99.5 && get_val(BUTTON_5) > 99.5 && get_val(ACCEL_2_Y) < 0.5 && get_val(BUTTON_8) < 0.5 ||
-             get_val(ACCEL_2_X) < 0.5 && get_val(BUTTON_5) > 99.5 && get_val(ACCEL_2_Y) < 0.5 && get_val(BUTTON_8) < 0.5 ||
-             get_val(ACCEL_2_X) > 99.5 && get_val(BUTTON_5) < 0.5 && get_val(ACCEL_2_Y) > 99.5 && get_val(BUTTON_8) < 0.5 ||
-             get_val(ACCEL_2_X) < 0.5 && get_val(BUTTON_5) < 0.5 && get_val(ACCEL_2_Y) > 99.5 && get_val(BUTTON_8) < 0.5 ||
-             get_val(ACCEL_2_X) < 0.5 && get_val(BUTTON_5) < 0.5 && get_val(ACCEL_2_Y) < 0.5 && get_val(BUTTON_8) < 0.5) {  // EB
+    else if (get_val(ACCEL_2_Z) > 99.5 && get_val(BUTTON_4) > 99.5 && get_val(BUTTON_21) < 0.5 && get_val(BUTTON_5) < 0.5 ||
+             get_val(ACCEL_2_Z) < 0.5 && get_val(BUTTON_4) > 99.5 && get_val(BUTTON_21) < 0.5 && get_val(BUTTON_5) < 0.5 ||
+             get_val(ACCEL_2_Z) > 99.5 && get_val(BUTTON_4) < 0.5 && get_val(BUTTON_21) > 99.5 && get_val(BUTTON_5) < 0.5 ||
+             get_val(ACCEL_2_Z) < 0.5 && get_val(BUTTON_4) < 0.5 && get_val(BUTTON_21) > 99.5 && get_val(BUTTON_5) < 0.5 ||
+             get_val(ACCEL_2_Z) < 0.5 && get_val(BUTTON_4) < 0.5 && get_val(BUTTON_21) < 0.5 && get_val(BUTTON_5) < 0.5) {  // EB
         combo_stop(comboLast);
         combo_stop(comboP1);
         combo_stop(comboP2);
@@ -72,7 +70,7 @@ main {
         combo_stop(comboB8);
         combo_run(comboEB);
     }
-    else if (get_val(ACCEL_2_X) < 0.5 && get_val(BUTTON_5) > 99.5 && get_val(ACCEL_2_Y) > 99.5 && get_val(BUTTON_8) < 0.5) { // B8
+    else if (get_val(ACCEL_2_Z) < 0.5 && get_val(BUTTON_4) > 99.5 && get_val(BUTTON_21) > 99.5 && get_val(BUTTON_5) < 0.5) { // B8
         combo_stop(comboLast);
         combo_stop(comboP1);
         combo_stop(comboP2);
@@ -90,7 +88,7 @@ main {
         combo_run(comboB8);
         combo_stop(comboEB);
     }
-    else if (get_val(ACCEL_2_X) > 99.5 && get_val(BUTTON_5) > 99.5 && get_val(ACCEL_2_Y) > 99.5 && get_val(BUTTON_8) < 0.5) { // B7
+    else if (get_val(ACCEL_2_Z) > 99.5 && get_val(BUTTON_4) > 99.5 && get_val(BUTTON_21) > 99.5 && get_val(BUTTON_5) < 0.5) { // B7
         combo_stop(comboLast);
         combo_stop(comboP1);
         combo_stop(comboP2);
@@ -108,7 +106,7 @@ main {
         combo_stop(comboB8);
         combo_stop(comboEB);
     }
-    else if (get_val(ACCEL_2_X) < 0.5 && get_val(BUTTON_5) < 0.5 && get_val(ACCEL_2_Y) < 0.5 && get_val(BUTTON_8) > 99.5) { // B6
+    else if (get_val(ACCEL_2_Z) < 0.5 && get_val(BUTTON_4) < 0.5 && get_val(BUTTON_21) < 0.5 && get_val(BUTTON_5) > 99.5) { // B6
         combo_stop(comboLast);
         combo_stop(comboP1);
         combo_stop(comboP2);
@@ -126,7 +124,7 @@ main {
         combo_stop(comboB8);
         combo_stop(comboEB);
     }
-    else if (get_val(ACCEL_2_X) > 99.5 && get_val(BUTTON_5) < 0.5 && get_val(ACCEL_2_Y) < 0.5 && get_val(BUTTON_8) > 99.5) { // B5
+    else if (get_val(ACCEL_2_Z) > 99.5 && get_val(BUTTON_4) < 0.5 && get_val(BUTTON_21) < 0.5 && get_val(BUTTON_5) > 99.5) { // B5
         combo_stop(comboLast);
         combo_stop(comboP1);
         combo_stop(comboP2);
@@ -144,7 +142,7 @@ main {
         combo_stop(comboB8);
         combo_stop(comboEB);
     }
-    else if (get_val(ACCEL_2_X) < 0.5 && get_val(BUTTON_5) < 0.5 && get_val(ACCEL_2_Y) > 99.5 && get_val(BUTTON_8) > 99.5) { // B4
+    else if (get_val(ACCEL_2_Z) < 0.5 && get_val(BUTTON_4) < 0.5 && get_val(BUTTON_21) > 99.5 && get_val(BUTTON_5) > 99.5) { // B4
         combo_stop(comboLast);
         combo_stop(comboP1);
         combo_stop(comboP2);
@@ -162,7 +160,7 @@ main {
         combo_stop(comboB8);
         combo_stop(comboEB);
     }
-    else if (get_val(ACCEL_2_X) > 99.5 && get_val(BUTTON_5) < 0.5 && get_val(ACCEL_2_Y) > 99.5 && get_val(BUTTON_8) > 99.5) { // B3
+    else if (get_val(ACCEL_2_Z) > 99.5 && get_val(BUTTON_4) < 0.5 && get_val(BUTTON_21) > 99.5 && get_val(BUTTON_5) > 99.5) { // B3
         combo_stop(comboLast);
         combo_stop(comboP1);
         combo_stop(comboP2);
@@ -180,7 +178,7 @@ main {
         combo_stop(comboB8);
         combo_stop(comboEB);
     }
-    else if (get_val(ACCEL_2_X) < 0.5 && get_val(BUTTON_5) > 99.5 && get_val(ACCEL_2_Y) < 0.5 && get_val(BUTTON_8) > 99.5) { // B2
+    else if (get_val(ACCEL_2_Z) < 0.5 && get_val(BUTTON_4) > 99.5 && get_val(BUTTON_21) < 0.5 && get_val(BUTTON_5) > 99.5) { // B2
         combo_stop(comboLast);
         combo_stop(comboP1);
         combo_stop(comboP2);
@@ -198,7 +196,7 @@ main {
         combo_stop(comboB8);
         combo_stop(comboEB);
     }
-    else if (get_val(ACCEL_2_X) > 99.5 && get_val(BUTTON_5) > 99.5 && get_val(ACCEL_2_Y) < 0.5 && get_val(BUTTON_8) > 99.5) { // B1
+    else if (get_val(ACCEL_2_Z) > 99.5 && get_val(BUTTON_4) > 99.5 && get_val(BUTTON_21) < 0.5 && get_val(BUTTON_5) > 99.5) { // B1
         combo_stop(comboLast);
         combo_stop(comboP1);
         combo_stop(comboP2);
@@ -216,45 +214,25 @@ main {
         combo_stop(comboB8);
         combo_stop(comboEB);
     }
-    else if (get_val(PADDLE_1) < -99.5 && get_val(PADDLE_2) > 99.5 && get_val(ACCEL_2_Z) < 0.5 && get_val(ACCEL_2_X) < 0.5 && get_val(BUTTON_5) > 99.5 && get_val(ACCEL_2_Y) > 99.5 && get_val(BUTTON_8) > 99.5) { // B0 or P4
-        if (LAST_STICK_2_Y == 70 || LAST_STICK_2_Y == 100 || LAST_STICK_2_Y == 90)  { // Previous it was P3/P5/P4.
-            combo_stop(comboLast);
-            combo_stop(comboP1);
-            combo_stop(comboP2);
-            combo_stop(comboP3);
-            combo_run(comboP4);
-            combo_stop(comboP5);
-            combo_stop(comboB0);
-            combo_stop(comboB1);
-            combo_stop(comboB2);
-            combo_stop(comboB3);
-            combo_stop(comboB4);
-            combo_stop(comboB5);
-            combo_stop(comboB6);
-            combo_stop(comboB7);
-            combo_stop(comboB8);
-            combo_stop(comboEB);
-        }
-        else {  // B0
-            combo_stop(comboLast);
-            combo_stop(comboP1);
-            combo_stop(comboP2);
-            combo_stop(comboP3);
-            combo_stop(comboP4);
-            combo_stop(comboP5);
-            combo_run(comboB0);
-            combo_stop(comboB1);
-            combo_stop(comboB2);
-            combo_stop(comboB3);
-            combo_stop(comboB4);
-            combo_stop(comboB5);
-            combo_stop(comboB6);
-            combo_stop(comboB7);
-            combo_stop(comboB8);
-            combo_stop(comboEB);
-        }
+    else if (get_val(PADDLE_1) > 99.5 && get_val(PADDLE_2) > 99.5 && get_val(PADDLE_3) > 99.5 && get_val(PADDLE_4) > 99.5 && get_val(BUTTON_20) < 0.5 && get_val(ACCEL_2_Z) < 0.5 && get_val(BUTTON_4) > 99.5 && get_val(BUTTON_21) > 99.5 && get_val(BUTTON_5) > 99.5) { // B0
+        combo_stop(comboLast);
+        combo_stop(comboP1);
+        combo_stop(comboP2);
+        combo_stop(comboP3);
+        combo_stop(comboP4);
+        combo_stop(comboP5);
+        combo_run(comboB0);
+        combo_stop(comboB1);
+        combo_stop(comboB2);
+        combo_stop(comboB3);
+        combo_stop(comboB4);
+        combo_stop(comboB5);
+        combo_stop(comboB6);
+        combo_stop(comboB7);
+        combo_stop(comboB8);
+        combo_stop(comboEB);
     }
-    else if (get_val(PADDLE_1) > 99.5 && get_val(PADDLE_2) > 99.5 && get_val(ACCEL_2_Z) > 99.5 && get_val(ACCEL_2_X) < 0.5 && get_val(BUTTON_5) > 99.5 && get_val(ACCEL_2_Y) > 99.5 && get_val(BUTTON_8) > 99.5) { // P1
+    else if (get_val(PADDLE_1) > 99.5 && get_val(PADDLE_2) > 99.5 && get_val(PADDLE_3) < 0.5 && get_val(PADDLE_4) > 99.5 && get_val(BUTTON_20) > 99.5 && get_val(ACCEL_2_Z) < 0.5 && get_val(BUTTON_4) > 99.5 && get_val(BUTTON_21) > 99.5 && get_val(BUTTON_5) > 99.5) { // P1
         combo_stop(comboLast);
         combo_run(comboP1);
         combo_stop(comboP2);
@@ -272,7 +250,7 @@ main {
         combo_stop(comboB8);
         combo_stop(comboEB);
     }
-    else if (get_val(PADDLE_1) > 99.5 && get_val(PADDLE_2) > 99.5 && get_val(ACCEL_2_Z) < 0.5 && get_val(ACCEL_2_X) < 0.5 && get_val(BUTTON_5) > 99.5 && get_val(ACCEL_2_Y) > 99.5 && get_val(BUTTON_8) > 99.5) { // P2
+    else if (get_val(PADDLE_1) > 99.5 && get_val(PADDLE_2) > 99.5 && get_val(PADDLE_3) < 0.5 && get_val(PADDLE_4) > 99.5 && get_val(BUTTON_20) < 0.5 && get_val(ACCEL_2_Z) < 0.5 && get_val(BUTTON_4) > 99.5 && get_val(BUTTON_21) > 99.5 && get_val(BUTTON_5) > 99.5) { // P2
         combo_stop(comboLast);
         combo_stop(comboP1);
         combo_run(comboP2);
@@ -290,7 +268,7 @@ main {
         combo_stop(comboB8);
         combo_stop(comboEB);
     } 
-    else if (get_val(PADDLE_1) < -99.5 && get_val(PADDLE_2) > 99.5 && get_val(ACCEL_2_Z) > 99.5 && get_val(ACCEL_2_X) < 0.5 && get_val(BUTTON_5) > 99.5 && get_val(ACCEL_2_Y) > 99.5 && get_val(BUTTON_8) > 99.5) { // P3
+    else if (get_val(PADDLE_1) > 99.5 && get_val(PADDLE_2) > 99.5 && get_val(PADDLE_3) > 99.5 && get_val(PADDLE_4) < 0.5 && get_val(BUTTON_20) > 99.5 && get_val(ACCEL_2_Z) < 0.5 && get_val(BUTTON_4) > 99.5 && get_val(BUTTON_21) > 99.5 && get_val(BUTTON_5) > 99.5) { // P3
         combo_stop(comboLast);
         combo_stop(comboP1);
         combo_stop(comboP2);
@@ -308,7 +286,25 @@ main {
         combo_stop(comboB8);
         combo_stop(comboEB);
     } 
-    else if (get_val(PADDLE_1) < 0.5 && get_val(PADDLE_1) > -0.5 && get_val(PADDLE_2) > 99.5 && get_val(ACCEL_2_Z) > 99.5 && get_val(ACCEL_2_X) < 0.5 && get_val(BUTTON_5) > 99.5 && get_val(ACCEL_2_Y) > 99.5 && get_val(BUTTON_8) > 99.5) { // P5
+    else if (get_val(PADDLE_1) > 99.5 && get_val(PADDLE_2) > 99.5 && get_val(PADDLE_3) > 99.5 && get_val(PADDLE_4) < 0.5 && get_val(BUTTON_20) < 0.5 && get_val(ACCEL_2_Z) < 0.5 && get_val(BUTTON_4) > 99.5 && get_val(BUTTON_21) > 99.5 && get_val(BUTTON_5) > 99.5) { // P4
+        combo_stop(comboLast);
+        combo_stop(comboP1);
+        combo_stop(comboP2);
+        combo_stop(comboP3);
+        combo_run(comboP4);
+        combo_stop(comboP5);
+        combo_stop(comboB0);
+        combo_stop(comboB1);
+        combo_stop(comboB2);
+        combo_stop(comboB3);
+        combo_stop(comboB4);
+        combo_stop(comboB5);
+        combo_stop(comboB6);
+        combo_stop(comboB7);
+        combo_stop(comboB8);
+        combo_stop(comboEB);
+	}
+    else if (get_val(PADDLE_1) > 99.5 && get_val(PADDLE_2) > 99.5 && get_val(PADDLE_3) < 0.5 && get_val(PADDLE_4) < 0.5 && get_val(BUTTON_20) > 99.5 && get_val(ACCEL_2_Z) < 0.5 && get_val(BUTTON_4) > 99.5 && get_val(BUTTON_21) > 99.5 && get_val(BUTTON_5) > 99.5) { // P5
         combo_stop(comboLast);
         combo_stop(comboP1);
         combo_stop(comboP2);
@@ -326,7 +322,7 @@ main {
         combo_stop(comboB8);
         combo_stop(comboEB);
 	}
-    else if (get_val(PADDLE_1) < 0.5 && get_val(PADDLE_2) > 99.5 && get_val(ACCEL_2_Z) < 0.5 && get_val(ACCEL_2_X) < 0.5 && get_val(BUTTON_5) > 99.5 && get_val(ACCEL_2_Y) > 99.5 && get_val(BUTTON_8) > 99.5) { // Acceleration intermediate
+    else if (get_val(PADDLE_1) > 99.5 && get_val(PADDLE_2) > 99.5 && get_val(PADDLE_3) < 0.5 && get_val(PADDLE_4) < 0.5 && get_val(BUTTON_20) < 0.5 && get_val(ACCEL_2_Z) < 0.5 && get_val(BUTTON_4) > 99.5 && get_val(BUTTON_21) > 99.5 && get_val(BUTTON_5) > 99.5) { // Acceleration intermediate
         combo_run(comboLast);
         combo_stop(comboP1);
         combo_stop(comboP2);
