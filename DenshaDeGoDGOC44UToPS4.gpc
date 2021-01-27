@@ -207,7 +207,7 @@ main {
         combo_stop(comboB8);
         combo_stop(comboEB);
     }
-    else if (get_val(ACCEL_2_X) <= 0.0 && get_val(ACCEL_2_Y) >= -10.0) { // B0
+    else if (get_val(ACCEL_2_X) <= 0.0 && get_val(ACCEL_2_Y) >= -10.0 && get_val(ACCEL_2_Y) <= 50.0) { // B0
         combo_stop(comboLast);
         combo_stop(comboP1);
         combo_stop(comboP2);
