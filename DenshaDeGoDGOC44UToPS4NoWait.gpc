@@ -1,0 +1,193 @@
+#pragma METAINFO("DenshaDeGo DGOC-44U To PS4 No Wait", 0, 3, "EddieLau")
+
+// inspired by HandsomeChan's script at https://mega.nz/file/XFl3SSRB#pi-fVi_JWkGES4ms9f6PI79RuMtKu1XP6obtWkCg4Ac
+// enhanced according to the controller outputs indicated in https://lihkg.com/thread/2320618/page/32
+
+#include <remapper.gph>
+
+const uint8 DenshaDeGo[43] = {
+    RMP_USB_A,
+    BUTTON_1,  BUTTON_2,  BUTTON_4,  BUTTON_3,  BUTTON_5,  BUTTON_6,  BUTTON_18, 
+    BUTTON_8,  BUTTON_9,  BUTTON_10, BUTTON_11, BUTTON_12, BUTTON_13, BUTTON_14, 
+    BUTTON_15, BUTTON_17, BUTTON_16, BUTTON_7, BUTTON_19, BUTTON_20, BUTTON_21, 
+    STICK_1_X, STICK_1_Y, ACCEL_2_X, ACCEL_2_Y, 
+    POINT_1_X, POINT_1_Y, POINT_2_X, POINT_2_Y, 
+    ACCEL_1_X, ACCEL_1_Y, ACCEL_1_Z, STICK_2_X, STICK_2_Y, ACCEL_2_Z, 
+    GYRO_1_X,  GYRO_1_Y,  GYRO_1_Z,
+    PADDLE_1,  PADDLE_2,  PADDLE_3,  PADDLE_4
+};
+
+int8 LAST_STICK_1_X = 0;
+int8 LAST_STICK_2_X = 0;
+int8 LAST_STICK_2_Y = 0;
+int8 LAST_BUTTON_8 = 0;
+
+init {
+    remapper(DenshaDeGo);
+}
+
+main {
+    // Brake
+    if (get_val(ACCEL_2_X) > 50.0 && get_val(ACCEL_2_Y) > -10.0) { // brake intermediate
+        set_val(STICK_1_X, LAST_STICK_1_X);
+        set_val(STICK_2_X, LAST_STICK_2_X);
+        set_val(STICK_2_Y, LAST_STICK_2_Y);
+        set_val(BUTTON_8, LAST_BUTTON_8);
+    }
+    else if (get_val(ACCEL_2_X) > 43.0 && get_val(ACCEL_2_X) <= 50.0 && get_val(ACCEL_2_Y) > -10.0) {  // EB
+        LAST_STICK_1_X = 100;
+        LAST_STICK_2_X = 0;
+        LAST_STICK_2_Y = -100;
+        LAST_BUTTON_8 = 100;
+        set_val(STICK_1_X, 100);
+        set_val(STICK_2_X, 0);
+        set_val(STICK_2_Y, -100);
+        set_val(BUTTON_8, 100);   
+    }
+    else if (get_val(ACCEL_2_X) > 40.0 && get_val(ACCEL_2_X) <= 43.0 && get_val(ACCEL_2_Y) > -10.0) { // B8
+        LAST_STICK_1_X = 100;
+        LAST_STICK_2_X = 0;
+        LAST_STICK_2_Y = -100;
+        LAST_BUTTON_8 = 0;
+        set_val(STICK_1_X, 100);
+        set_val(STICK_2_X, 0);
+        set_val(STICK_2_Y, -100);
+        set_val(BUTTON_8, 0); 
+    }
+    else if (get_val(ACCEL_2_X) > 38.0 && get_val(ACCEL_2_X) <= 40.0 && get_val(ACCEL_2_Y) > -10.0) { // B7
+        LAST_STICK_1_X = 90;
+        LAST_STICK_2_X = 0;
+        LAST_STICK_2_Y = -90;
+        LAST_BUTTON_8 = 0;
+        set_val(STICK_1_X, 90);
+        set_val(STICK_2_X, 0);
+        set_val(STICK_2_Y, -90);
+        set_val(BUTTON_8, 0); 
+    }
+    else if (get_val(ACCEL_2_X) > 35.0 && get_val(ACCEL_2_X) <= 38.0 && get_val(ACCEL_2_Y) > -10.0) { // B6
+        LAST_STICK_1_X = 80;
+        LAST_STICK_2_X = 0;
+        LAST_STICK_2_Y = -80;
+        LAST_BUTTON_8 = 0;
+        set_val(STICK_1_X, 80);
+        set_val(STICK_2_X, 0);
+        set_val(STICK_2_Y, -80);
+        set_val(BUTTON_8, 0);
+    }
+    else if (get_val(ACCEL_2_X) > 30.0 && get_val(ACCEL_2_X) <= 35.0 && get_val(ACCEL_2_Y) > -10.0) { // B5
+        LAST_STICK_1_X = 70;
+        LAST_STICK_2_X = 0;
+        LAST_STICK_2_Y = -70;
+        LAST_BUTTON_8 = 0;
+        set_val(STICK_1_X, 70);
+        set_val(STICK_2_X, 0);
+        set_val(STICK_2_Y, -70);
+        set_val(BUTTON_8, 0);
+    }
+    else if (get_val(ACCEL_2_X) > 25.0 && get_val(ACCEL_2_X) <= 30.0 && get_val(ACCEL_2_Y) > -10.0) { // B4
+        LAST_STICK_1_X = 60;
+        LAST_STICK_2_X = 0;
+        LAST_STICK_2_Y = -60;
+        LAST_BUTTON_8 = 0;
+        set_val(STICK_1_X, 60);
+        set_val(STICK_2_X, 0);
+        set_val(STICK_2_Y, -60);
+        set_val(BUTTON_8, 0); 
+    }
+    else if (get_val(ACCEL_2_X) > 18.0 && get_val(ACCEL_2_X) <= 25.0 && get_val(ACCEL_2_Y) > -10.0) { // B3
+        LAST_STICK_1_X = 50;
+        LAST_STICK_2_X = 0;
+        LAST_STICK_2_Y = -50;
+        LAST_BUTTON_8 = 0;
+        set_val(STICK_1_X, 50);
+        set_val(STICK_2_X, 0);
+        set_val(STICK_2_Y, -50);
+        set_val(BUTTON_8, 0);
+    }
+    else if (get_val(ACCEL_2_X) > 10.0 && get_val(ACCEL_2_X) <= 18.0 && get_val(ACCEL_2_Y) > -10.0) { // B2
+        LAST_STICK_1_X = 40;
+        LAST_STICK_2_X = 0;
+        LAST_STICK_2_Y = -40;
+        LAST_BUTTON_8 = 0;
+        set_val(STICK_1_X, 40);
+        set_val(STICK_2_X, 0);
+        set_val(STICK_2_Y, -40);
+        set_val(BUTTON_8, 0);
+    }
+    else if (get_val(ACCEL_2_X) > 0.0 && get_val(ACCEL_2_X) <= 10.0 && get_val(ACCEL_2_Y) > -10.0) { // B1
+        LAST_STICK_1_X = 30;
+        LAST_STICK_2_X = 0;
+        LAST_STICK_2_Y = -30;
+        LAST_BUTTON_8 = 0;
+        set_val(STICK_1_X, 30);
+        set_val(STICK_2_X, 0);
+        set_val(STICK_2_Y, -30);
+        set_val(BUTTON_8, 0);
+    }
+    else if (get_val(ACCEL_2_X) <= 0.0 && get_val(ACCEL_2_Y) >= -10.0 && get_val(ACCEL_2_Y) <= 50.0) { // B0
+        LAST_STICK_1_X = 0;
+        LAST_STICK_2_X = 0;
+        LAST_STICK_2_Y = 0;
+        LAST_BUTTON_8 = 0;
+        set_val(STICK_1_X, 0);
+        set_val(STICK_2_X, 0);
+        set_val(STICK_2_Y, 0);
+        set_val(BUTTON_8, 0);
+    }
+    else if (get_val(ACCEL_2_X) <= 0.0 && get_val(ACCEL_2_Y) >= -20.0 && get_val(ACCEL_2_Y) < -10.0) { // P1
+        LAST_STICK_1_X = 0;
+        LAST_STICK_2_X = -30;
+        LAST_STICK_2_Y = 30;
+        LAST_BUTTON_8 = 0;
+        set_val(STICK_1_X, 0);
+        set_val(STICK_2_X, -30); 
+        set_val(STICK_2_Y, 30); 
+        set_val(BUTTON_8, 0);
+    }
+    else if (get_val(ACCEL_2_X) <= 0.0 && get_val(ACCEL_2_Y) >= -40.0 && get_val(ACCEL_2_Y) < -20.0) { // P2
+        LAST_STICK_1_X = 0;
+        LAST_STICK_2_X = -50;
+        LAST_STICK_2_Y = 50;
+        LAST_BUTTON_8 = 0;
+        set_val(STICK_1_X, 0);
+        set_val(STICK_2_X, -50); 
+        set_val(STICK_2_Y, 50); 
+        set_val(BUTTON_8, 0);
+    } 
+    else if (get_val(ACCEL_2_X) <= 0.0 && get_val(ACCEL_2_Y) >= -60.0 && get_val(ACCEL_2_Y) < -40.0) { // P3
+        LAST_STICK_1_X = 0;
+        LAST_STICK_2_X = -70;
+        LAST_STICK_2_Y = 70;
+        LAST_BUTTON_8 = 0;
+        set_val(STICK_1_X, 0);
+        set_val(STICK_2_X, -70);
+        set_val(STICK_2_Y, 70);  
+        set_val(BUTTON_8, 0);
+    } 
+    else if (get_val(ACCEL_2_X) <= 0.0 && get_val(ACCEL_2_Y) >= -80.0 && get_val(ACCEL_2_Y) < -60.0) { // P4
+        LAST_STICK_1_X = 0;
+        LAST_STICK_2_X = -90;
+        LAST_STICK_2_Y = 90;
+        LAST_BUTTON_8 = 0;
+        set_val(STICK_1_X, 0);
+        set_val(STICK_2_X, -90); 
+        set_val(STICK_2_Y, 90); 
+        set_val(BUTTON_8, 0);
+	}
+    else if (get_val(ACCEL_2_X) <= 0.0 && get_val(ACCEL_2_Y) >= -100.0 && get_val(ACCEL_2_Y) < -80.0) { // P5
+        LAST_STICK_1_X = 0;
+        LAST_STICK_2_X = -100;
+        LAST_STICK_2_Y = 100;
+        LAST_BUTTON_8 = 0;
+        set_val(STICK_1_X, 0);
+        set_val(STICK_2_X, -100); 
+        set_val(STICK_2_Y, 100); 
+        set_val(BUTTON_8, 0);
+	}
+    else if (get_val(ACCEL_2_X) <= 0.0 && get_val(ACCEL_2_Y) > 50.0) { // Acceleration intermediate
+        set_val(STICK_1_X, LAST_STICK_1_X);
+        set_val(STICK_2_X, LAST_STICK_2_X);
+        set_val(STICK_2_Y, LAST_STICK_2_Y);
+        set_val(BUTTON_8, LAST_BUTTON_8);
+    }
+}
