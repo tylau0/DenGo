@@ -1,0 +1,66 @@
+#pragma METAINFO("DenshaDeGo PS4 D-pad control", 0, 1, "EddieLau")
+
+#include <remapper.gph>
+
+const uint8 DefaultMappingLayout[43] = {
+    RMP_USB_A | RMP_USB_B | RMP_USB_C | RMP_USB_D | RMP_BT_A | RMP_BT_B,
+    BUTTON_1,  BUTTON_2,  BUTTON_3,  BUTTON_4,  BUTTON_5,  BUTTON_6,  BUTTON_7, 
+    BUTTON_8,  BUTTON_9,  BUTTON_10, BUTTON_11, BUTTON_12, BUTTON_13, BUTTON_14, 
+    BUTTON_15, BUTTON_16, BUTTON_17, BUTTON_18, BUTTON_19, BUTTON_20, BUTTON_21, 
+    STICK_1_X, STICK_1_Y, STICK_2_X, STICK_2_Y, 
+    POINT_1_X, POINT_1_Y, POINT_2_X, POINT_2_Y, 
+    ACCEL_1_X, ACCEL_1_Y, ACCEL_1_Z, ACCEL_2_X, ACCEL_2_Y, ACCEL_2_Z, 
+    GYRO_1_X,  GYRO_1_Y,  GYRO_1_Z,
+    PADDLE_1,  PADDLE_2,  PADDLE_3,  PADDLE_4
+};
+
+init {
+    remapper(DefaultMappingLayout);
+}
+
+main {
+    if (get_val(BUTTON_10) > 50.0) { // D-pad up
+        combo_run(up);
+    }
+    if (get_val(BUTTON_11) > 50.0){  // D-pad down
+        combo_run(down);
+    }
+    if (get_val(BUTTON_12) > 50.0) { // D-pad left
+	    combo_run(left);
+    }
+    if (get_val(BUTTON_13) > 50.0) { // D-pad right
+        combo_run(right);
+    }
+}
+
+combo up {
+    set_val(STICK_2_Y, -100.0);
+    set_val(STICK_2_X, 100.0);
+	wait(70);
+    set_val(STICK_2_Y, 0);
+    set_val(STICK_2_X, 0);
+	wait(70);
+}
+
+combo down {
+    set_val(STICK_2_Y, 100.0);
+    set_val(STICK_2_X, -100.0);
+	wait(70);
+    set_val(STICK_2_Y, 0);
+    set_val(STICK_2_X, 0);
+	wait(70);
+}
+
+combo left {
+    set_val(STICK_1_X, -100.0);
+	wait(70);
+    set_val(STICK_1_X, 0);
+	wait(70);
+}
+
+combo right {
+    set_val(STICK_1_X, 100.0);
+	wait(70);
+    set_val(STICK_1_X, 0);
+	wait(70);
+}
