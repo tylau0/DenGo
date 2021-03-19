@@ -1,4 +1,4 @@
-#pragma METAINFO("DenshaDeGo PS4 D-pad control", 0, 1, "EddieLau")
+#pragma METAINFO("DenshaDeGo PS4 D-pad control", 1, 0, "EddieLau")
 
 #include <remapper.gph>
 
