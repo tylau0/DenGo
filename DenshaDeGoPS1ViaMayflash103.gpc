@@ -133,7 +133,7 @@ main {
         set_val(BUTTON_8, 0); 
     }
     else if (get_val(PADDLE_1) < -99.5 && get_val(PADDLE_2) > 99.5 && get_val(ACCEL_2_Z) < 0.5 && get_val(ACCEL_2_X) < 0.5 && get_val(BUTTON_5) > 99.5 && get_val(ACCEL_2_Y) > 99.5 && get_val(BUTTON_8) > 99.5) { // B0 or P4
-	    if (LAST_STICK_2_Y == 70 || LAST_STICK_2_Y == 100 || LAST_STICK_2_Y == 85)  { // Previous it was P3/P5/P4.
+	    if (LAST_STICK_2_X == -70 || LAST_STICK_2_X == -100 || LAST_STICK_2_X == -85)  { // Previous it was P3/P5/P4.
             LAST_STICK_1_X = 0;
             LAST_STICK_2_X = -85;
             LAST_STICK_2_Y = 0;
