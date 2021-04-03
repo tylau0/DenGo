@@ -8,6 +8,11 @@
  * Have pin 4 cabled to the trigger output of the ultrasound sensor.
  * Have pin 5 cabled to the echo output of the ultrasound sensor.
  * Connect the pins to ground if no ultrasound sensor is used.
+ * NOTE: To get it to work with TCPP-20001, you need to make either change
+ * to the PsxNewLib
+ * - Set INTER_CMD_BYTE_DELAY to 50 in PsxNewLib.h
+ * - Set ATTN_DELAY to 100 in PsxControllerBitBang.h
+ * Details: https://github.com/SukkoPera/PsxNewLib/issues/9
  */
  
 /*******************************************************************************
