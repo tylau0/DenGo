@@ -163,7 +163,7 @@ void loop () {
       else {
         // Work on the ultrasound sensor first
         // Duration will be the input pulse width and distance will be the distance to the obstacle in centimeters
-        int duration, distance;
+        float duration, distance;
         // Output pulse with 1ms width on trigPin
         digitalWrite(PIN_ULTRASOUND_TRIGGER, LOW);
         delayMicroseconds(2);
