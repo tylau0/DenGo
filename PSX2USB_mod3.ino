@@ -1,13 +1,30 @@
 /*
  * Copyright (C) 2020, 2021 Eddie
- * This one adds support of 
- * 1) an additional pedal for horn
- * Have pin 12 being 5V if the pedal is not pressed, 0V otherwise.
- * Connect the pin to 5V if no pedal is used.
- * 2) an additional ultrasound sensor for finger pointing confirmation
- * Have pin 4 cabled to the trigger output of the ultrasound sensor.
- * Have pin 5 cabled to the echo output of the ultrasound sensor.
- * Connect the pins to ground if no ultrasound sensor is used.
+ * 
+ * This file is modified from the PsxNewLib example at
+ * https://github.com/SukkoPera/PsxNewLib/blob/master/examples/PSX2USB/PSX2USB.ino
+ * 
+ * It is using the Psx New library at 
+ * https://github.com/SukkoPera/PsxNewLib
+ * and the ArduinoJoystick library at
+ * https://github.com/MHeironimus/ArduinoJoystickLibrary.
+ * 
+ *  ---------------------
+ * \ 1 2 3 4 5 6 7 8 9 /
+ *  -------------------
+ *
+ * Connection to Arduino Leonardo
+ * PlayStation 1 controller pin 1 (DATA) --> Arduino Leonardo digital port 12
+ * PlayStation 1 controller pin 2 (CMD) --> Arduino Leonardo digital port 11
+ * PlayStation 1 controller pin 4 (GND) --> Arduino Leonardo port GND
+ * PlayStation 1 controller pin 5 (VCC) --> Arduino Leonardo port 3.3V
+ * PlayStation 1 controller pin 6 (ATT) --> Arduino Leonardo digital port 5
+ * PlayStation 1 controller pin 7 (CLK) --> Arduino Leonardo digital port 4
+ * 
+ * Arduino Leonardo digital port 6 is for the optional pedal.
+ *                          port 2 is for the optional ultraound trigger.
+ *                          port 3 is for the optional ultraound echo.
+ *
  * NOTE: To get it to work with TCPP-20001, you need to make either change
  * to the PsxNewLib
  * - Set INTER_CMD_BYTE_DELAY to 50 in PsxNewLib.h
@@ -49,15 +66,15 @@
  * ICSP header on the Leonardo.
  *
  */
-const byte PIN_PS2_ATT = 11;
-const byte PIN_PS2_CMD = 9;
-const byte PIN_PS2_DAT = 8;
-const byte PIN_PS2_CLK = 10;
+const byte PIN_PS2_ATT = 5;
+const byte PIN_PS2_CMD = 11;
+const byte PIN_PS2_DAT = 12;
+const byte PIN_PS2_CLK = 4;
 
-const byte PIN_PEDAL = 12;
+const byte PIN_PEDAL = 6;
 
-const byte PIN_ULTRASOUND_TRIGGER = 4;
-const byte PIN_ULTRASOUND_ECHO = 5;
+const byte PIN_ULTRASOUND_TRIGGER = 2;
+const byte PIN_ULTRASOUND_ECHO = 3;
 
 const unsigned long POLLING_INTERVAL = 1000U / 50U;
 
@@ -176,7 +193,7 @@ void loop () {
         delayMicroseconds(10);
         digitalWrite(PIN_ULTRASOUND_TRIGGER, LOW);
         // Measure the pulse input in echo pin
-        duration = pulseIn(PIN_ULTRASOUND_ECHO, HIGH);
+        duration = pulseIn(PIN_ULTRASOUND_ECHO, HIGH, 10000);
         // Distance is half the duration devided by 29.1 (from datasheet)
         distance = (duration/2) / 29.1;
         debugln (F(distance));
