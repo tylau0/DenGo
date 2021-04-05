@@ -14,35 +14,28 @@
  *  -------------------
  *
  * Connection to Arduino Leonardo
- * PlayStation 1 controller pin 1 (DATA) --> Arduino Leonardo digital port 8
- * PlayStation 1 controller pin 2 (CMD) --> Arduino Leonardo digital port 9
+ * PlayStation 1 controller pin 1 (DATA) --> Arduino Leonardo digital port 12
+ * PlayStation 1 controller pin 2 (CMD) --> Arduino Leonardo digital port 11
  * PlayStation 1 controller pin 4 (GND) --> Arduino Leonardo port GND
  * PlayStation 1 controller pin 5 (VCC) --> Arduino Leonardo port 3.3V
- * PlayStation 1 controller pin 6 (ATT) --> Arduino Leonardo digital port 11
- * PlayStation 1 controller pin 7 (CLK) --> Arduino Leonardo digital port 10
+ * PlayStation 1 controller pin 6 (ATT) --> Arduino Leonardo digital port 5
+ * PlayStation 1 controller pin 7 (CLK) --> Arduino Leonardo digital port 4
  * 
- * Arduino Leonardo digital port 12 is for the optional pedal.
- * This one adds support of 
- * 1) an additional pedal for horn
- * Have pin 12 being 5V if the pedal is not pressed, 0V otherwise.
- * Connect the pin to 5V if no pedal is used.
- * 2) an additional ultrasound sensor for finger pointing confirmation
- * Have pin 4 cabled to the trigger output of the ultrasound sensor.
- * Have pin 5 cabled to the echo output of the ultrasound sensor.
- * Connect the pins to ground if no ultrasound sensor is used.
- *
+ * Arduino Leonardo digital port 6 is for the optional pedal.
+ *                          port 2 is for the optional ultraound trigger.
+ *                          port 3 is for the optional ultraound echo.
  */
 
 #include <Psx.h>
 #include <Joystick.h>
 
-#define ultrasoundTriggerPin 4
-#define ultrasoundEchoPin 5
-#define dataPin 8
-#define cmndPin 9
-#define attPin 11
-#define clockPin 10
-#define pedalPin 12
+#define ultrasoundTriggerPin 2
+#define ultrasoundEchoPin 3
+#define dataPin 12
+#define cmndPin 11
+#define attPin 5
+#define clockPin 4
+#define pedalPin 6
 
 #define ANALOG_MIN_VALUE 0U
 #define ANALOG_MAX_VALUE 255U
@@ -135,6 +128,7 @@ void loop () {
     // Work on the ultrasound sensor first
     // Duration will be the input pulse width and distance will be the distance to the obstacle in centimeters
     float duration = 0, distance = 0;
+    
     // Output pulse with 1ms width on trigPin
     digitalWrite(ultrasoundTriggerPin, LOW);
     delayMicroseconds(2);
@@ -142,7 +136,7 @@ void loop () {
     delayMicroseconds(10);
     digitalWrite(ultrasoundTriggerPin, LOW);
     // Measure the pulse input in echo pin
-    duration = pulseIn(ultrasoundEchoPin, HIGH);
+    duration = pulseIn(ultrasoundEchoPin, HIGH, 10000);
     // Distance is half the duration devided by 29.1 (from datasheet)
     distance = (duration/2) / 29.1;
     debugln (F(distance));
